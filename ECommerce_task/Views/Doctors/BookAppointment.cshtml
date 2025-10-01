@@ -1,0 +1,116 @@
+﻿<h1>Book Appointment</h1>
+@model IEnumerable<Doctor>
+
+<div class="col-12">
+    <form method="get">
+        <!-- مهم تحط method="get" -->
+        <div class="row">
+            <!-- Doctor Name -->
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Doctor Name" name="Name" value="@ViewBag.Name" />
+            </div>
+
+            <!-- Specialization -->
+            <div class="col-md-2">
+                <select name="SpecializationId" class="form-control">
+                    <option value="">--Select Specialization--</option>
+                    @foreach (var item in ViewBag.Specializations)
+                    {
+                        if (item.Id == ViewBag.SpecializationId)
+                        {
+                            <option value="@item.Id" selected>@item.SpecializationName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.SpecializationName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-dark w-100">Filter</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img" src="~/photos/@item.DoctorImg" style="width: 100%; height: auto;" alt="Doctor Image" />
+                <div class="card-body">
+                    <h5 class="card-title">@item.DoctorName</h5>
+                    <p class="card-text">Specialization: @item.Specialization.SpecializationName</p>
+                    <a href="@Url.Action("CreateAppointment", "Doctors", new { doctorId = item.Id })"
+                       class="btn btn-primary">
+                        Book Appointment
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Pagination -->
+<ul class="pagination">
+    @if (ViewBag.curuntpage > 1)
+    {
+        <li class="page-item">
+            <a class="page-link" href="?page=@(ViewBag.curuntpage - 1)">Previous</a>
+        </li>
+    }
+
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        if (i == ViewBag.curuntpage)
+        {
+            <li class="active">
+                <a class="page-link" href="?page=@i">@i</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" href="?page=@i">@i</a>
+            </li>
+        }
+    }
+
+    @if (ViewBag.curuntpage < ViewBag.TotalPages)
+    {
+        <li class="page-item">
+            <a class="page-link" href="?page=@(ViewBag.curuntpage + 1)">Next</a>
+        </li>
+    }
+</ul>
+
+@* Book Appointment background*@
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
+<!-- الخلفية المتدرجة -->
+<div class="animated-background"></div>
+<script>
+    // الأيقونات تتحرك في الخلفية
+    const icons = ["fa-stethoscope", "fa-pills", "fa-syringe", "fa-heartbeat", "fa-clinic-medical"];
+    const background = document.querySelector(".animated-background");
+
+    for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("i");
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        icon.className = `fas ${randomIcon} icon`;
+        icon.style.left = Math.random() * 95 + "%";
+        icon.style.fontSize = 25 + Math.random() * 20 + "px";
+        icon.style.animationDuration = (10 + Math.random() * 15) + "s";
+        background.appendChild(icon);
+    }
+</script>

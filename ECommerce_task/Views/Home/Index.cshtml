@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- رابط Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
+<div class="background">
+    <div class="welcome-text" id="welcomeText"></div>
+</div>
+
+<script>
+    // الرسالة الترحيبية
+    const messages = [
+        "Welcome to MedCare",
+        "Your health our priority",
+        "Explore our medical services",
+        "Book appointments easily"
+    ];
+
+    let msgIndex = 0, charIndex = 0, currentMsg = '', deleting = false;
+    const typeSpeed = 100, deleteSpeed = 50, pause = 1500;
+
+    function typeEffect() {
+        const element = document.getElementById('welcomeText');
+
+        if (!deleting) {
+            if (charIndex < messages[msgIndex].length) {
+                currentMsg += messages[msgIndex][charIndex];
+                element.textContent = currentMsg;
+                charIndex++;
+                setTimeout(typeEffect, typeSpeed);
+            } else {
+                deleting = true;
+                setTimeout(typeEffect, pause);
+            }
+        } else {
+            if (charIndex > 0) {
+                currentMsg = currentMsg.slice(0, -1);
+                element.textContent = currentMsg;
+                charIndex--;
+                setTimeout(typeEffect, deleteSpeed);
+            } else {
+                deleting = false;
+                msgIndex = (msgIndex + 1) % messages.length;
+                setTimeout(typeEffect, typeSpeed);
+            }
+        }
+    }
+
+    typeEffect();
+
+    // الأيقونات تتحرك
+    const icons = ["fa-stethoscope", "fa-pills", "fa-syringe", "fa-heartbeat", "fa-clinic-medical"];
+    const background = document.querySelector(".background");
+
+    for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("i");
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        icon.className = `fas ${randomIcon} icon`;
+        icon.style.left = Math.random() * 95 + "%";
+        icon.style.fontSize = 15 + Math.random() * 30 + "px";
+        icon.style.animationDuration = (10 + Math.random() * 15) + "s";
+        background.appendChild(icon);
+    }
+</script>

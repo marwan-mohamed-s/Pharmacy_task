@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "CreateAppointment";
+    var doctorName = ViewBag.DoctorName; // الدكتور جاي من الكنترولر
+    var doctorId = ViewBag.DoctorId;
+}
+
+<h1>Complete Appointment with @doctorName</h1>
+
+<form id="appointmentForm" method="post" asp-action="CreateAppointment" asp-controller="Doctors">
+    <input type="hidden" name="doctorId" value="@doctorId" />
+
+    <div class="form-group">
+        <label for="patientName">Patient Name:</label>
+        <input type="text" class="form-control" id="patientName" name="patientName" required>
+    </div>
+
+    <div class="form-group">
+        <label for="appointmentDate">Appointment Date:</label>
+        <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" required>
+    </div>
+
+    <div class="form-group">
+        <label for="appointmentTime">Appointment Time:</label>
+        <input type="time" class="form-control" id="appointmentTime" name="appointmentTime" required>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary" id="submitBtn">Complete Appointment</button>
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            @* نتحقق إذا في alert من الـ ViewBag *@
+            @if (ViewBag.Alert != null)
+            {
+                    <text>
+                    Swal.fire({
+                        icon: '@ViewBag.Alert',
+                        title: '@ViewBag.AlertTitle',
+                        text: '@ViewBag.AlertText',
+                        draggable: true
+                    });
+                    </text>
+            }
+        </script>
+    }
+
+</form>
+@* Book Appointment background*@
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
+<!-- الخلفية المتدرجة -->
+<div class="animated-background"></div>
+<script>
+    // الأيقونات تتحرك في الخلفية
+    const icons = ["fa-stethoscope", "fa-pills", "fa-syringe", "fa-heartbeat", "fa-clinic-medical"];
+    const background = document.querySelector(".animated-background");
+
+    for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("i");
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        icon.className = `fas ${randomIcon} icon`;
+        icon.style.left = Math.random() * 95 + "%";
+        icon.style.fontSize = 25 + Math.random() * 20 + "px";
+        icon.style.animationDuration = (10 + Math.random() * 15) + "s";
+        background.appendChild(icon);
+    }
+</script>
+

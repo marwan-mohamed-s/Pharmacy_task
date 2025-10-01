@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Appointment>
+<h1>All Appointment :</h1>
+@{
+    foreach (var item in Model)
+    {
+        <h2>=>Patient Name : @item.PatientName</h2>
+        <h4>patient Date : @item.AppointmentDate</h4>
+        <h4>patient Time : @item.AppointmentTime</h4>
+        <h4>patient Doctor : @item.Doctor.DoctorName</h4>
+        <br/>
+    }
+
+}
+@* Book Appointment background*@
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="~/css/home.css" />
+
+<!-- الخلفية المتدرجة -->
+<div class="animated-background"></div>
+<script>
+    // الأيقونات تتحرك في الخلفية
+    const icons = ["fa-stethoscope", "fa-pills", "fa-syringe", "fa-heartbeat", "fa-clinic-medical"];
+    const background = document.querySelector(".animated-background");
+
+    for (let i = 0; i < 15; i++) {
+        const icon = document.createElement("i");
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        icon.className = `fas ${randomIcon} icon`;
+        icon.style.left = Math.random() * 95 + "%";
+        icon.style.fontSize = 25 + Math.random() * 20 + "px";
+        icon.style.animationDuration = (10 + Math.random() * 15) + "s";
+        background.appendChild(icon);
+    }
+</script>

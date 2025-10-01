@@ -1,0 +1,48 @@
+﻿/* الخلفية المتدرجة تتحرك وتبقى خلف كل العناصر */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #00c6ff, #0072ff);
+    overflow: hidden;
+    z-index: -1; /* <- يجعلها خلف كل شيء */
+}
+
+/* أيقونات الطب المتحركة */
+.icon {
+    position: absolute;
+    color: rgba(255,255,255,0.5); /* أوضح */
+    font-size: 2.5rem; /* حجم واضح */
+    text-shadow: 0 0 8px rgba(255,255,255,0.7); /* توهج خفيف */
+    animation-name: float;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Navbar فوق كل شيء */
+.navbar {
+    position: relative;
+    z-index: 10;
+}
